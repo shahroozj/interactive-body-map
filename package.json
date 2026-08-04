@@ -1,0 +1,14 @@
+{
+  "name": "interactive-body-map",
+  "version": "1.0.0",
+  "description": "Clickable human body diagram. Standalone JavaScript build plus a WordPress plugin.",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node test/render.test.mjs",
+    "package": "node build.mjs && node package.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}

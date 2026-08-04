@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interactive Body Map &mdash; Demo &amp; Documentation</title>
+<meta name="description" content="Clickable human body diagram. Link any part of the body to any page. Responsive, transparent background, no dependencies.">
+<link rel="stylesheet" href="css/body-map.css">
+<style>
+    :root {
+        --page-bg: #f6f8fa;
+        --page-fg: #1f2933;
+        --page-muted: #5b6672;
+        --page-card: #ffffff;
+        --page-line: #dde3ea;
+        --page-accent: #e0245e;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --page-bg: #12171d;
+            --page-fg: #e8edf2;
+            --page-muted: #9aa7b4;
+            --page-card: #1a2027;
+            --page-line: #2b333c;
+        }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        margin: 0;
+        background: var(--page-bg);
+        color: var(--page-fg);
+        font: 16px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px 80px; }
+
+    header.hero { text-align: center; padding: 56px 20px 32px; }
+    header.hero h1 { margin: 0 0 8px; font-size: clamp(28px, 5vw, 40px); letter-spacing: -.02em; }
+    header.hero p { margin: 0 auto; max-width: 46em; color: var(--page-muted); }
+
+    .badges { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 20px; }
+    .badges span {
+        font-size: 13px; padding: 4px 12px; border-radius: 999px;
+        border: 1px solid var(--page-line); color: var(--page-muted);
+    }
+
+    section { margin-top: 56px; }
+    h2 { font-size: 22px; margin: 0 0 6px; letter-spacing: -.01em; }
+    h2 + p.lede { margin: 0 0 24px; color: var(--page-muted); }
+    h3 { font-size: 16px; margin: 28px 0 8px; }
+
+    .demo-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+
+    .card {
+        background: var(--page-card);
+        border: 1px solid var(--page-line);
+        border-radius: 12px;
+        padding: 24px 20px 20px;
+    }
+
+    .card h3 { margin-top: 0; }
+    .card .caption { font-size: 13px; color: var(--page-muted); margin: 16px 0 0; text-align: center; }
+
+    #readout {
+        margin-top: 16px; padding: 10px 14px; text-align: center; font-size: 14px;
+        border: 1px dashed var(--page-line); border-radius: 8px; color: var(--page-muted);
+        min-height: 42px;
+    }
+    #readout strong { color: var(--page-fg); }
+
+    pre {
+        background: #0f1419; color: #e6edf3; border-radius: 10px;
+        padding: 18px 20px; overflow-x: auto; font-size: 13px; line-height: 1.55;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    pre .t { color: #7ee787; }
+    pre .a { color: #79c0ff; }
+    pre .s { color: #ffa657; }
+    pre .c { color: #8b949e; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--page-line); vertical-align: top; }
+    th { font-weight: 600; }
+    td code, p code, li code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: .9em; background: rgba(127, 140, 155, .16); padding: 1px 5px; border-radius: 4px;
+    }
+    .scroller { overflow-x: auto; }
+
+    .swatches { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 18px; }
+    .swatches button {
+        width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--page-line);
+        cursor: pointer; padding: 0;
+    }
+    .swatches button:focus-visible { outline: 2px solid var(--page-accent); outline-offset: 2px; }
+
+    footer { margin-top: 72px; text-align: center; color: var(--page-muted); font-size: 14px; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+    <h1>Interactive Body Map</h1>
+    <p>A clickable human body diagram in plain HTML, CSS and JavaScript. Every region links
+       to any URL you choose. Scalable vector artwork on a transparent background, so it sits
+       on your page rather than on a box.</p>
+    <div class="badges">
+        <span>No dependencies</span>
+        <span>5.7 KB gzipped</span>
+        <span>Desktop &amp; touch</span>
+        <span>Keyboard accessible</span>
+        <span>Real <code>&lt;a&gt;</code> links</span>
+    </div>
+</header>
+
+<div class="wrap">
+
+    <section>
+        <h2>Live demo</h2>
+        <p class="lede">Hover, tap or tab through the figure. Both diagrams below are the same
+            component in two different modes.</p>
+
+        <div class="demo-grid">
+            <div class="card">
+                <h3>Simple mode &mdash; 9 regions</h3>
+                <div id="demo-simple"></div>
+                <p class="caption">Head, neck, chest, abdomen, pelvis, both arms, both legs.</p>
+            </div>
+
+            <div class="card">
+                <h3>Detailed mode &mdash; 21 regions</h3>
+                <div id="demo-detailed"></div>
+                <p class="caption">Limbs split into shoulder, upper arm, forearm, hand &mdash;
+                    thigh, knee, lower leg, foot.</p>
+            </div>
+
+            <div class="card">
+                <h3>Themed &amp; selectable</h3>
+                <div id="demo-theme"></div>
+                <div class="swatches" id="swatches"></div>
+                <div id="readout">Click a region.</div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Quickest possible install</h2>
+        <p class="lede">Three lines. No JavaScript to write &mdash; the links live in HTML attributes.</p>
+<pre><span class="c">&lt;!-- 1. the stylesheet, in &lt;head&gt; --&gt;</span>
+&lt;<span class="t">link</span> <span class="a">rel</span>=<span class="s">"stylesheet"</span> <span class="a">href</span>=<span class="s">"css/body-map.css"</span>&gt;
+
+<span class="c">&lt;!-- 2. the diagram, anywhere in the page --&gt;</span>
+&lt;<span class="t">div</span> <span class="a">data-body-map</span>
+     <span class="a">data-part-head</span>=<span class="s">"/conditions/head"</span>
+     <span class="a">data-part-chest</span>=<span class="s">"/conditions/chest"</span>
+     <span class="a">data-part-abdomen</span>=<span class="s">"/conditions/abdomen"</span>
+     <span class="a">data-part-arm-left</span>=<span class="s">"/conditions/arms"</span>
+     <span class="a">data-part-arm-right</span>=<span class="s">"/conditions/arms"</span>
+     <span class="a">data-part-leg-left</span>=<span class="s">"/conditions/legs"</span>
+     <span class="a">data-part-leg-right</span>=<span class="s">"/conditions/legs"</span>&gt;&lt;/<span class="t">div</span>&gt;
+
+<span class="c">&lt;!-- 3. the script, before &lt;/body&gt; --&gt;</span>
+&lt;<span class="t">script</span> <span class="a">src</span>=<span class="s">"js/body-map.min.js"</span>&gt;&lt;/<span class="t">script</span>&gt;</pre>
+        <p>Elements carrying <code>data-body-map</code> start themselves on page load.
+           Nothing else is required.</p>
+    </section>
+
+    <section>
+        <h2>Configuring from JavaScript</h2>
+        <p class="lede">For anything the attributes cannot express &mdash; callbacks, per-region
+            colours, dynamic links.</p>
+<pre>&lt;<span class="t">div</span> <span class="a">id</span>=<span class="s">"body-map"</span>&gt;&lt;/<span class="t">div</span>&gt;
+
+&lt;<span class="t">script</span>&gt;
+BodyMap.init(<span class="s">'#body-map'</span>, {
+  mode: <span class="s">'detailed'</span>,
+  target: <span class="s">'_blank'</span>,
+  parts: {
+    head:      <span class="s">'/anatomy/head'</span>,
+    chest:     { url: <span class="s">'/anatomy/chest'</span>, label: <span class="s">'Chest &amp; ribs'</span> },
+    <span class="c">// one key covers both sides and every segment inside them</span>
+    arms:      <span class="s">'/anatomy/arms'</span>,
+    legs:      <span class="s">'/anatomy/legs'</span>,
+    <span class="c">// a more specific key always wins</span>
+    <span class="s">'hand-left'</span>:  { url: <span class="s">'/anatomy/hands'</span>, color: <span class="s">'#f59e0b'</span> },
+    <span class="s">'hand-right'</span>: { url: <span class="s">'/anatomy/hands'</span>, color: <span class="s">'#f59e0b'</span> },
+    pelvis:    <span class="s">false</span>   <span class="c">// drawn, but not clickable</span>
+  },
+  theme: { fill: <span class="s">'#b8c4d0'</span>, hover: <span class="s">'#0ea5e9'</span> },
+  onSelect: <span class="t">function</span> (part, event) {
+    console.log(part.id, part.label, part.url);
+    <span class="c">// return false to stay on the page</span>
+  }
+});
+&lt;/<span class="t">script</span>&gt;</pre>
+    </section>
+
+    <section>
+        <h2>Region names</h2>
+        <p class="lede">Use these as <code>data-part-&lt;id&gt;</code> attributes or as keys in
+            <code>parts</code>. Sides are anatomical: the subject's right arm is drawn on the
+            viewer's left.</p>
+
+        <h3>Simple mode</h3>
+        <div class="scroller">
+        <table>
+            <thead><tr><th>ID</th><th>Label</th></tr></thead>
+            <tbody>
+                <tr><td><code>head</code></td><td>Head</td></tr>
+                <tr><td><code>neck</code></td><td>Neck</td></tr>
+                <tr><td><code>chest</code></td><td>Chest</td></tr>
+                <tr><td><code>abdomen</code></td><td>Abdomen</td></tr>
+                <tr><td><code>pelvis</code></td><td>Pelvis</td></tr>
+                <tr><td><code>arm-right</code> / <code>arm-left</code></td><td>Right / left arm</td></tr>
+                <tr><td><code>leg-right</code> / <code>leg-left</code></td><td>Right / left leg</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>Detailed mode adds</h3>
+        <div class="scroller">
+        <table>
+            <thead><tr><th>ID</th><th>Label</th></tr></thead>
+            <tbody>
+                <tr><td><code>shoulder-right</code> / <code>shoulder-left</code></td><td>Shoulder</td></tr>
+                <tr><td><code>upper-arm-right</code> / <code>upper-arm-left</code></td><td>Upper arm</td></tr>
+                <tr><td><code>forearm-right</code> / <code>forearm-left</code></td><td>Forearm</td></tr>
+                <tr><td><code>hand-right</code> / <code>hand-left</code></td><td>Hand</td></tr>
+                <tr><td><code>thigh-right</code> / <code>thigh-left</code></td><td>Thigh</td></tr>
+                <tr><td><code>knee-right</code> / <code>knee-left</code></td><td>Knee</td></tr>
+                <tr><td><code>lower-leg-right</code> / <code>lower-leg-left</code></td><td>Lower leg</td></tr>
+                <tr><td><code>foot-right</code> / <code>foot-left</code></td><td>Foot</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>Group keys</h3>
+        <p>Setting a group key links everything inside it at once, so you rarely need all 21
+           entries: <code>arms</code>, <code>legs</code>, <code>hands</code>, <code>feet</code>,
+           <code>knees</code>, <code>thighs</code>, <code>shoulders</code>,
+           <code>forearms</code>, <code>upper-arms</code>, <code>lower-legs</code>,
+           plus <code>arm-left</code>, <code>arm-right</code>, <code>leg-left</code> and
+           <code>leg-right</code> in detailed mode.</p>
+    </section>
+
+    <section>
+        <h2>Options</h2>
+        <div class="scroller">
+        <table>
+            <thead><tr><th>Option</th><th>Attribute</th><th>Default</th><th>Description</th></tr></thead>
+            <tbody>
+                <tr><td><code>mode</code></td><td><code>data-mode</code></td><td><code>"simple"</code></td><td><code>"simple"</code> or <code>"detailed"</code>.</td></tr>
+                <tr><td><code>parts</code></td><td><code>data-part-*</code></td><td><code>{}</code></td><td>Region ID &rarr; URL, or an object with <code>url</code>, <code>label</code>, <code>target</code>, <code>rel</code>, <code>color</code>, <code>hoverColor</code>, <code>className</code>.</td></tr>
+                <tr><td><code>target</code></td><td><code>data-target</code></td><td><code>""</code></td><td>Default link target, e.g. <code>_blank</code>.</td></tr>
+                <tr><td><code>tooltip</code></td><td><code>data-tooltip</code></td><td><code>true</code></td><td>Show the floating label.</td></tr>
+                <tr><td><code>tooltipTemplate</code></td><td>&mdash;</td><td><code>null</code></td><td>Function returning tooltip HTML.</td></tr>
+                <tr><td><code>selectable</code></td><td><code>data-selectable</code></td><td><code>false</code></td><td>Keep the clicked region highlighted.</td></tr>
+                <tr><td><code>showDisabled</code></td><td><code>data-show-disabled</code></td><td><code>true</code></td><td>Draw regions that have no link.</td></tr>
+                <tr><td><code>maxWidth</code></td><td><code>data-max-width</code></td><td><code>""</code></td><td>Any CSS length, e.g. <code>320px</code>.</td></tr>
+                <tr><td><code>title</code></td><td><code>data-title</code></td><td>&hellip;anatomy</td><td>Accessible name of the figure.</td></tr>
+                <tr><td><code>theme</code></td><td><code>data-fill</code>, <code>data-hover</code>, <code>data-active</code>, <code>data-stroke</code>, <code>data-detail</code></td><td><code>null</code></td><td>Colour overrides.</td></tr>
+                <tr><td><code>onSelect</code></td><td>&mdash;</td><td><code>null</code></td><td><code>(part, event)</code>. Return <code>false</code> to cancel navigation.</td></tr>
+                <tr><td><code>onHover</code></td><td>&mdash;</td><td><code>null</code></td><td><code>(part, event)</code>.</td></tr>
+            </tbody>
+        </table>
+        </div>
+
+        <h3>Methods</h3>
+        <div class="scroller">
+        <table>
+            <tbody>
+                <tr><td><code>BodyMap.init(target, options)</code></td><td>Create. <code>target</code> is a selector, element or list.</td></tr>
+                <tr><td><code>BodyMap.get(target)</code></td><td>Instance already attached to an element.</td></tr>
+                <tr><td><code>BodyMap.parts(mode)</code></td><td>Array of region metadata.</td></tr>
+                <tr><td><code>instance.setParts({…})</code></td><td>Merge in new links and redraw.</td></tr>
+                <tr><td><code>instance.setOptions({…})</code></td><td>Merge in new options and redraw.</td></tr>
+                <tr><td><code>instance.select(id)</code> / <code>.clear()</code></td><td>Highlight a region.</td></tr>
+                <tr><td><code>instance.destroy()</code></td><td>Remove everything and unbind.</td></tr>
+            </tbody>
+        </table>
+        </div>
+    </section>
+
+    <section>
+        <h2>Styling</h2>
+        <p class="lede">Colours are CSS custom properties. Override them wherever you like &mdash;
+            no need to edit the plugin stylesheet.</p>
+<pre><span class="c">/* every diagram on the site */</span>
+.bodymap {
+  <span class="a">--bodymap-fill</span>: #cbd5e1;
+  <span class="a">--bodymap-fill-hover</span>: #0ea5e9;
+  <span class="a">--bodymap-fill-active</span>: #0369a1;
+  <span class="a">--bodymap-stroke</span>: #64748b;
+  <span class="a">--bodymap-detail</span>: #64748b;
+  <span class="a">--bodymap-tooltip-bg</span>: #0f172a;
+  <span class="a">max-width</span>: 340px;
+}
+
+<span class="c">/* one region only */</span>
+.bodymap__region[data-bodymap-part=<span class="s">"head"</span>] {
+  <span class="a">--bodymap-fill-hover</span>: #f59e0b;
+}
+
+<span class="c">/* outline style */</span>
+&lt;<span class="t">div</span> <span class="a">data-body-map</span> <span class="a">class</span>=<span class="s">"bodymap--outline"</span>&gt;&lt;/<span class="t">div</span>&gt;</pre>
+        <p>The stylesheet already answers <code>prefers-color-scheme: dark</code> and
+           <code>prefers-reduced-motion</code>. Add <code>data-bodymap-theme="light"</code> to opt a
+           diagram out of the dark palette.</p>
+    </section>
+
+    <section>
+        <h2>Notes on the details</h2>
+        <ul>
+            <li><strong>Transparent.</strong> Neither the container nor the SVG paints a
+                background, so the figure blends into any page colour or image.</li>
+            <li><strong>Real links.</strong> Each region is an SVG <code>&lt;a href&gt;</code>:
+                crawlable, middle-clickable, and it shows the URL in the status bar.</li>
+            <li><strong>Responsive.</strong> The artwork is vector and scales with its container.
+                Set <code>max-width</code> and nothing else.</li>
+            <li><strong>Touch.</strong> Hover effects are gated behind
+                <code>@media (hover: hover)</code>, so tapping never leaves a region stuck in the
+                hover colour.</li>
+            <li><strong>Keyboard.</strong> Tab moves between regions in anatomical order, Enter
+                follows the link, and the focused region is outlined along the body edge.</li>
+            <li><strong>Size.</strong> One JS file and one CSS file: 5.7 KB and 1.2 KB gzipped.
+                No fonts, no images, no network requests.</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>Interactive Body Map v1.0.0 &mdash; also available as a WordPress plugin.</p>
+    </footer>
+
+</div>
+
+<script src="js/body-map.js"></script>
+<script>
+(function () {
+    'use strict';
+
+    var links = {
+        head: '#head', neck: '#neck', chest: '#chest', abdomen: '#abdomen',
+        pelvis: '#pelvis', arms: '#arms', legs: '#legs'
+    };
+
+    BodyMap.init('#demo-simple', {
+        mode: 'simple',
+        parts: links,
+        onSelect: function () { return false; }
+    });
+
+    BodyMap.init('#demo-detailed', {
+        mode: 'detailed',
+        parts: {
+            head: '#head', neck: '#neck', chest: '#chest', abdomen: '#abdomen',
+            pelvis: '#pelvis', shoulders: '#shoulders', 'upper-arms': '#upper-arms',
+            forearms: '#forearms', hands: '#hands', thighs: '#thighs',
+            knees: '#knees', 'lower-legs': '#lower-legs', feet: '#feet'
+        },
+        onSelect: function () { return false; }
+    });
+
+    var readout = document.getElementById('readout');
+    var themed = BodyMap.init('#demo-theme', {
+        mode: 'simple',
+        selectable: true,
+        parts: links,
+        theme: { hover: '#0ea5e9', active: '#0369a1' },
+        onSelect: function (part) {
+            readout.innerHTML = 'Selected <strong>' + part.label + '</strong> &rarr; <code>' +
+                part.url + '</code>';
+            return false;
+        }
+    });
+
+    var palette = ['#0ea5e9', '#e0245e', '#22c55e', '#f59e0b', '#8b5cf6'];
+    var swatches = document.getElementById('swatches');
+    palette.forEach(function (color) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.style.background = color;
+        b.setAttribute('aria-label', 'Use ' + color);
+        b.addEventListener('click', function () {
+            themed.setOptions({ theme: { hover: color, active: color } });
+        });
+        swatches.appendChild(b);
+    });
+}());
+</script>
+</body>
+</html>

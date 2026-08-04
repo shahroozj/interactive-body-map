@@ -1,0 +1,134 @@
+/* Settings screen for Interactive Body Map. */
+
+.bodymap-admin__intro {
+    max-width: 60em;
+    font-size: 14px;
+}
+
+.bodymap-admin__layout {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    margin-top: 12px;
+}
+
+.bodymap-admin__main {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.bodymap-admin__side {
+    flex: 0 0 300px;
+    position: sticky;
+    top: 46px;
+}
+
+@media screen and (max-width: 1100px) {
+    .bodymap-admin__layout {
+        display: block;
+    }
+
+    .bodymap-admin__side {
+        position: static;
+        margin-top: 24px;
+        max-width: 420px;
+    }
+}
+
+.bodymap-admin__card {
+    background: #fff;
+    border: 1px solid #c3c4c7;
+    border-radius: 4px;
+    padding: 4px 16px 16px;
+    margin-bottom: 16px;
+}
+
+.bodymap-admin__card h2 {
+    font-size: 14px;
+    margin: 12px 0 8px;
+}
+
+.bodymap-admin__preview {
+    padding: 12px 0;
+    /* A checkerboard makes the transparent background obvious. */
+    background-image:
+        linear-gradient(45deg, #f0f0f1 25%, transparent 25%, transparent 75%, #f0f0f1 75%),
+        linear-gradient(45deg, #f0f0f1 25%, transparent 25%, transparent 75%, #f0f0f1 75%);
+    background-size: 16px 16px;
+    background-position: 0 0, 8px 8px;
+    border-radius: 3px;
+}
+
+.bodymap-admin__preview .bodymap {
+    max-width: 190px;
+}
+
+/* Colours update live; the region layout needs a save and a reload. */
+.bodymap-admin__preview.is-stale::after {
+    content: attr(data-note);
+    display: block;
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: #fcf9e8;
+    border-top: 1px solid #dba617;
+    font-size: 12px;
+    color: #4a3d0a;
+}
+
+.bodymap-admin__shortcode {
+    font-size: 13px;
+    padding: 4px 8px;
+}
+
+.bodymap-links {
+    margin: 16px 0;
+}
+
+.bodymap-links th[scope="row"] {
+    width: 220px;
+    padding: 10px;
+}
+
+.bodymap-links th[scope="row"] code {
+    display: block;
+    font-size: 11px;
+    color: #646970;
+    background: none;
+    padding: 2px 0 0;
+}
+
+.bodymap-links__target {
+    width: 80px;
+    text-align: center;
+}
+
+.bodymap-links input[type="text"] {
+    width: 100%;
+}
+
+.bodymap-admin__check,
+.bodymap-admin__radio {
+    display: inline-block;
+    margin: 0 18px 6px 0;
+}
+
+.bodymap-admin__check {
+    display: block;
+    margin-right: 0;
+}
+
+.bodymap-admin__colour {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 8px;
+}
+
+.bodymap-admin__colour label {
+    flex: 0 0 130px;
+}
+
+/* The colour picker's own button sits better aligned this way. */
+.bodymap-admin__colour .wp-picker-container {
+    line-height: 1;
+}

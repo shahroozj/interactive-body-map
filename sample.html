@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Interactive Body Map</title>
+        <link rel="stylesheet" href="js-version/css/body-map.min.css">
+    </head>
+    <body>
+        <div id="anatomy" style="max-width: 200px;"></div>
+        <script src="js-version/js/body-map.min.js"></script>
+        <script>
+        var STORAGE_KEY = 'anatomy-selected-part';
+
+        function readSelection() {
+            try {
+                return localStorage.getItem(STORAGE_KEY);
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function writeSelection(id) {
+            try {
+                if (id) {
+                    localStorage.setItem(STORAGE_KEY, id);
+                } else {
+                    localStorage.removeItem(STORAGE_KEY);
+                }
+            } catch (e) {
+                // Storage unavailable: the selection just will not survive a refresh.
+            }
+        }
+
+        var anatomy = BodyMap.init('#anatomy', {
+            mode: 'detailed',  //simple or detailed
+            target: '_blank',
+            selectable: true,  // keeps the clicked region highlighted
+            parts: {
+                head:  '/anatomy/head',
+                //neck: '/anatomy/neck',
+                chest: { url: '/anatomy/chest', label: 'Chest & ribs' },
+                //arms:  '/anatomy/arms',
+                //legs:  '/anatomy/legs',
+                //abdomen : '/anatomy/abdomen',
+                //'hand-left': { url: '/anatomy/hands', color: '#f59e0b' },
+                //pelvis: '/anatomy/pelvis',
+            },
+            theme: { fill: '#cbd5e1', hover: '#0ea5e9', active: '#0369a1' },
+            onSelect: function (part, event) {
+                console.log(part);
+                writeSelection(part.id);
+                return false;
+            }
+        });
+
+        // Restore whatever was chosen last time.
+        var saved = readSelection();
+        if (saved) {
+            anatomy.select(saved);
+
+            if (anatomy.selected !== saved) {
+                writeSelection(null);
+            }
+        }
+        </script>
+    </body>
+</html>

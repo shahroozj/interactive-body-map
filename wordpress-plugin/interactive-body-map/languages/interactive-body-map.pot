@@ -1,0 +1,387 @@
+# Copyright (C) 2026 Shahrooz Jafari
+# This file is distributed under the MIT licence, like the plugin itself.
+msgid ""
+msgstr ""
+"Project-Id-Version: Interactive Body Map\n"
+"Report-Msgid-Bugs-To: https://github.com/shahroozj/interactive-body-map/issues\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: interactive-body-map\n"
+
+#: admin/js/block.js:22
+#: admin/js/block.js:81
+msgid "Use the saved setting"
+msgstr ""
+
+#: admin/js/block.js:45
+#: includes/class-bodymap-block.php:54
+#: includes/class-bodymap-settings.php:97
+msgid "Body Map"
+msgstr ""
+
+#: admin/js/block.js:46
+msgid "A clickable body diagram. Links are set once under Settings > Body Map."
+msgstr ""
+
+#: admin/js/block.js:50
+msgid "anatomy"
+msgstr ""
+
+#: admin/js/block.js:51
+msgid "body"
+msgstr ""
+
+#: admin/js/block.js:52
+msgid "medical"
+msgstr ""
+
+#: admin/js/block.js:64
+msgid "Layout"
+msgstr ""
+
+#: admin/js/block.js:66
+#: includes/class-bodymap-settings.php:303
+msgid "Regions"
+msgstr ""
+
+#: admin/js/block.js:72
+#: includes/class-bodymap-settings.php:316
+msgid "Maximum width"
+msgstr ""
+
+#: admin/js/block.js:73
+msgid "Any CSS length, for example 340px. Leave empty for the saved setting."
+msgstr ""
+
+#: admin/js/block.js:78
+#: includes/class-bodymap-settings.php:325
+msgid "Alignment"
+msgstr ""
+
+#: admin/js/block.js:82
+#: includes/class-bodymap-settings.php:329
+msgid "Left"
+msgstr ""
+
+#: admin/js/block.js:83
+#: includes/class-bodymap-settings.php:330
+msgid "Centre"
+msgstr ""
+
+#: admin/js/block.js:84
+#: includes/class-bodymap-settings.php:331
+msgid "Right"
+msgstr ""
+
+#: admin/js/block.js:91
+#: includes/class-bodymap-settings.php:345
+msgid "Behaviour"
+msgstr ""
+
+#: admin/js/block.js:92
+#: includes/class-bodymap-settings.php:253
+msgid "Tooltip"
+msgstr ""
+
+#: admin/js/block.js:93
+msgid "Show the region name on hover and on focus."
+msgstr ""
+
+#: admin/js/block.js:94
+#: includes/class-bodymap-settings.php:350
+msgid "Keep the clicked region highlighted"
+msgstr ""
+
+#: admin/js/block.js:95
+msgid "Draw regions with no link"
+msgstr ""
+
+#: admin/js/block.js:96
+msgid "Add a plain list of links below"
+msgstr ""
+
+#: admin/js/block.js:97
+msgid "Outline style"
+msgstr ""
+
+#: admin/js/block.js:98
+msgid "Fill regions only while they are hovered."
+msgstr ""
+
+#: admin/js/block.js:102
+#: includes/class-bodymap-settings.php:242
+msgid "Links"
+msgstr ""
+
+#: admin/js/block.js:103
+msgid "Each part of the body is linked once for the whole site."
+msgstr ""
+
+#: admin/js/block.js:105
+msgid "Edit the links"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:34
+#: includes/class-bodymap-geometry.php:224
+msgid "Head"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:41
+#: includes/class-bodymap-geometry.php:225
+msgid "Neck"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:48
+#: includes/class-bodymap-geometry.php:226
+msgid "Chest"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:55
+#: includes/class-bodymap-geometry.php:227
+msgid "Abdomen"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:62
+#: includes/class-bodymap-geometry.php:228
+msgid "Pelvis"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:69
+msgid "Right shoulder"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:76
+msgid "Right upper arm"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:83
+msgid "Right forearm"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:90
+msgid "Right hand"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:97
+msgid "Right thigh"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:104
+msgid "Right knee"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:111
+msgid "Right lower leg"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:118
+msgid "Right foot"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:125
+msgid "Left shoulder"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:132
+msgid "Left upper arm"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:139
+msgid "Left forearm"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:146
+msgid "Left hand"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:153
+msgid "Left thigh"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:160
+msgid "Left knee"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:167
+msgid "Left lower leg"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:174
+msgid "Left foot"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:229
+msgid "Right arm"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:230
+msgid "Left arm"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:231
+msgid "Right leg"
+msgstr ""
+
+#: includes/class-bodymap-geometry.php:232
+msgid "Left leg"
+msgstr ""
+
+#: includes/class-bodymap-model.php:28
+msgid "Simple - 9 regions"
+msgstr ""
+
+#: includes/class-bodymap-model.php:29
+msgid "Detailed - 21 regions"
+msgstr ""
+
+#: includes/class-bodymap-model.php:181
+msgid "%s (whole limb)"
+msgstr ""
+
+#: includes/class-bodymap-render.php:155
+#: includes/class-bodymap-settings.php:404
+msgid "Interactive body map"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:96
+#: includes/class-bodymap-settings.php:233
+msgid "Interactive Body Map"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:213
+msgid "Copied"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:214
+#: includes/class-bodymap-settings.php:435
+msgid "Copy shortcode"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:235
+msgid "Point each part of the body at a page, then drop the shortcode wherever you want the diagram to appear."
+msgstr ""
+
+#: includes/class-bodymap-settings.php:244
+msgid "Left and right are the figure's own left and right, so the right arm is the one drawn on your left. Fill in a \"whole limb\" row to cover every segment of that limb at once; a more specific row always wins."
+msgstr ""
+
+#: includes/class-bodymap-settings.php:252
+msgid "Link"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:254
+msgid "New tab"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:300
+msgid "Appearance"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:312
+msgid "Simple treats each arm and leg as one link. Detailed splits them into shoulder, upper arm, forearm and hand, and thigh, knee, lower leg and foot."
+msgstr ""
+
+#: includes/class-bodymap-settings.php:321
+msgid "Any CSS length, for example 340px or 100%. The figure scales to fit and never overflows its column."
+msgstr ""
+
+#: includes/class-bodymap-settings.php:349
+msgid "Show a tooltip with the region name"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:351
+msgid "Draw regions that have no link"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:352
+msgid "Add a plain list of the same links below the figure"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:353
+msgid "Outline style: fill regions only on hover"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:366
+msgid "Open every link in a new tab"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:371
+msgid "Colours"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:375
+msgid "Body"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:376
+msgid "Hover"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:377
+msgid "Selected"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:378
+msgid "Unlinked"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:379
+msgid "Outline"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:380
+msgid "Contour lines"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:381
+msgid "Tooltip background"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:382
+msgid "Tooltip text"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:395
+msgid "Leave a colour empty to inherit it from your theme stylesheet. The figure itself never paints a background, so it always sits on your page colour."
+msgstr ""
+
+#: includes/class-bodymap-settings.php:399
+msgid "Accessible name"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:405
+msgid "Read out by screen readers when the figure receives focus."
+msgstr ""
+
+#: includes/class-bodymap-settings.php:415
+msgid "Preview"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:417
+msgid "Save to see the new region layout."
+msgstr ""
+
+#: includes/class-bodymap-settings.php:427
+msgid "Colour changes show here straight away. Save to apply them to your site."
+msgstr ""
+
+#: includes/class-bodymap-settings.php:431
+msgid "Shortcode"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:432
+msgid "Paste this into any post, page or widget:"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:439
+msgid "Every setting above can be overridden per shortcode, for example:"
+msgstr ""
+
+#: includes/class-bodymap-settings.php:444
+msgid "In the block editor, search for the \"Body Map\" block instead."
+msgstr ""
+
+#: interactive-body-map.php:128
+msgid "Settings"
+msgstr ""

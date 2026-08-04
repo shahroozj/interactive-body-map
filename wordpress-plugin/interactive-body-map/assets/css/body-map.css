@@ -1,0 +1,229 @@
+/*!
+ * Interactive Body Map - v1.0.0
+ * Stylesheet. Every colour is a custom property, so themes are one-liners.
+ */
+
+.bodymap {
+    /* --- palette ------------------------------------------------------ */
+    --bodymap-fill: #b8c4d0;
+    --bodymap-fill-hover: #e0245e;
+    --bodymap-fill-active: #b5164a;
+    --bodymap-fill-disabled: #c9d1d9;
+    --bodymap-stroke: #6b7785;
+    --bodymap-stroke-width: 1.6;
+    --bodymap-detail: #6b7785;
+    --bodymap-detail-width: 1.4;
+    --bodymap-focus: #e0245e;
+    --bodymap-tooltip-bg: #1f2933;
+    --bodymap-tooltip-color: #ffffff;
+    --bodymap-tooltip-radius: 4px;
+    --bodymap-duration: 160ms;
+
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 420px;
+    margin-inline: auto;
+    /* No background of its own: the figure sits on whatever is behind it. */
+    background: transparent;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.bodymap__svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+    touch-action: manipulation;
+}
+
+/* --- regions ---------------------------------------------------------- */
+
+.bodymap__region {
+    cursor: pointer;
+    outline: none;
+    /* SVG <a> is inline by default in some engines; this keeps hit areas sane. */
+    -webkit-tap-highlight-color: transparent;
+}
+
+.bodymap__shape {
+    fill: var(--bodymap-fill);
+    stroke: var(--bodymap-stroke);
+    stroke-width: var(--bodymap-stroke-width);
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+    transition:
+        fill var(--bodymap-duration) ease-out,
+        opacity var(--bodymap-duration) ease-out;
+}
+
+.bodymap__region--disabled {
+    cursor: default;
+}
+
+.bodymap__region--disabled .bodymap__shape {
+    fill: var(--bodymap-fill-disabled);
+    opacity: .65;
+}
+
+/* Hover is applied by script (.is-hover) and by CSS, so the diagram is
+   already interactive before the script runs. */
+.bodymap__region.is-hover .bodymap__shape,
+.bodymap__region.is-selected .bodymap__shape {
+    fill: var(--bodymap-fill-hover);
+}
+
+.bodymap__region.is-selected .bodymap__shape {
+    fill: var(--bodymap-fill-active);
+}
+
+.bodymap__region--disabled.is-hover .bodymap__shape {
+    fill: var(--bodymap-fill-disabled);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .bodymap__region:hover .bodymap__shape {
+        fill: var(--bodymap-fill-hover);
+    }
+
+    .bodymap__region--disabled:hover .bodymap__shape {
+        fill: var(--bodymap-fill-disabled);
+    }
+}
+
+.bodymap__region:active .bodymap__shape {
+    fill: var(--bodymap-fill-active);
+}
+
+/* Keyboard focus. Drawn as a stroke so it hugs the body outline instead of
+   a rectangle around it. */
+.bodymap__region:focus-visible .bodymap__shape {
+    fill: var(--bodymap-fill-hover);
+    stroke: var(--bodymap-focus);
+    stroke-width: calc(var(--bodymap-stroke-width) * 2.25);
+}
+
+/* --- contour lines ---------------------------------------------------- */
+
+.bodymap__details {
+    pointer-events: none;
+}
+
+.bodymap__details path {
+    fill: none;
+    stroke: var(--bodymap-detail);
+    stroke-width: var(--bodymap-detail-width);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: .5;
+    vector-effect: non-scaling-stroke;
+}
+
+/* --- tooltip ---------------------------------------------------------- */
+
+.bodymap__tooltip {
+    position: absolute;
+    z-index: 5;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -100%);
+    padding: 5px 9px;
+    max-width: 14em;
+    border-radius: var(--bodymap-tooltip-radius);
+    background: var(--bodymap-tooltip-bg);
+    color: var(--bodymap-tooltip-color);
+    font: 500 13px/1.35 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    text-align: center;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--bodymap-duration) ease-out, visibility var(--bodymap-duration);
+}
+
+.bodymap__tooltip.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.bodymap__tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border: 5px solid transparent;
+    border-top-color: var(--bodymap-tooltip-bg);
+}
+
+/* --- companion link list --------------------------------------------- */
+/* Rendered next to the figure so the same links exist as plain text. */
+
+.bodymap-list {
+    margin: 1em 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4em;
+    justify-content: center;
+    font: 400 14px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.bodymap-list a {
+    display: inline-block;
+    padding: .3em .7em;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    text-decoration: none;
+    opacity: .85;
+}
+
+.bodymap-list a:hover,
+.bodymap-list a:focus {
+    opacity: 1;
+}
+
+/* --- variations ------------------------------------------------------- */
+
+.bodymap--align-left {
+    margin-inline: 0 auto;
+}
+
+.bodymap--align-right {
+    margin-inline: auto 0;
+}
+
+.bodymap--outline .bodymap__shape {
+    fill: transparent;
+}
+
+.bodymap--outline .bodymap__region.is-hover .bodymap__shape,
+.bodymap--outline .bodymap__region:hover .bodymap__shape {
+    fill: var(--bodymap-fill-hover);
+}
+
+/* Follows the visitor's system theme when the host page has no opinion. */
+@media (prefers-color-scheme: dark) {
+    .bodymap:not([data-bodymap-theme="light"]) {
+        --bodymap-fill: #4a5568;
+        --bodymap-fill-disabled: #3c4451;
+        --bodymap-stroke: #98a4b3;
+        --bodymap-detail: #98a4b3;
+        --bodymap-tooltip-bg: #f2f5f8;
+        --bodymap-tooltip-color: #1f2933;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bodymap__shape,
+    .bodymap__tooltip {
+        transition: none;
+    }
+}
+
+@media print {
+    .bodymap__tooltip {
+        display: none;
+    }
+}

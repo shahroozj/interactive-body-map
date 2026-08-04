@@ -1,0 +1,17 @@
+# Normalise line endings.
+#
+# build.mjs writes LF, so on a machine with core.autocrlf=true the checked-out
+# files disagree with the build output and Git reports the generated assets as
+# modified after every build even when the content is identical. Pinning the
+# working tree to LF keeps the build reproducible on every platform.
+* text=auto eol=lf
+
+# Binary assets — never normalise these.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.zip binary
+*.woff binary
+*.woff2 binary
